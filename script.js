@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const formData = new FormData(form);
 
         // Submit form via AJAX
-        fetch('submit.php', {
+        fetch('https://bionutrex.dz/submit.php', {
             method: 'POST',
             body: formData
         })
