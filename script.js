@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const whatsappValue = whatsappInput.value.trim();
 
         if (!whatsappValue.startsWith('+')) {
-            showMessage('Please include the country code in your WhatsApp number (e.g., +1, +44, +213)', 'error');
+            showMessage('Please include the country code in your WhatsApp number (e.g., +1, +44, +974)', 'error');
             whatsappInput.focus();
             return;
         }

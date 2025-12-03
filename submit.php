@@ -1,160 +1,196 @@
 <?php
-/**
- * Contact Form Submission Handler
- * Sends form data to your email using Gmail SMTP
- */
-
-// Set JSON response header
 header('Content-Type: application/json');
-
-// Include configuration
 require_once 'config.php';
 
-// Function to send email using Gmail SMTP
-function sendEmail($data) {
-    // Validate configuration
-    if (RECIPIENT_EMAIL === 'your-email@gmail.com' || GMAIL_APP_PASSWORD === 'your-app-password-here') {
-        return [
-            'success' => false,
-            'message' => 'Email configuration is not set up. Please configure config.php file.'
-        ];
-    }
-    
-    // Sanitize input data
-    $name = htmlspecialchars(trim($data['name']));
-    $email = filter_var(trim($data['email']), FILTER_SANITIZE_EMAIL);
-    $subject = htmlspecialchars(trim($data['subject']));
-    $description = htmlspecialchars(trim($data['description']));
-    $country = htmlspecialchars(trim($data['country']));
-    $whatsapp = htmlspecialchars(trim($data['whatsapp']));
-    
-    // Validate email
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        return [
-            'success' => false,
-            'message' => 'Invalid email address provided.'
-        ];
-    }
-    
-    // Create email subject
-    $emailSubject = "New Project Request: " . $subject;
-    
-    // Create email body
-    $emailBody = "
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #5FE3D9 0%, #B565D8 100%); color: white; padding: 20px; border-radius: 10px 10px 0 0; }
-            .content { background: #f8f9fa; padding: 20px; border-radius: 0 0 10px 10px; }
-            .field { margin-bottom: 15px; }
-            .field-label { font-weight: bold; color: #4A4A4A; }
-            .field-value { margin-top: 5px; padding: 10px; background: white; border-radius: 5px; }
-            .footer { margin-top: 20px; padding-top: 20px; border-top: 2px solid #e9ecef; font-size: 12px; color: #6c757d; }
-        </style>
-    </head>
-    <body>
-        <div class='container'>
-            <div class='header'>
-                <h2>🎯 New Project Request from FindAura.org</h2>
-            </div>
-            <div class='content'>
-                <div class='field'>
-                    <div class='field-label'>👤 Client Name:</div>
-                    <div class='field-value'>{$name}</div>
-                </div>
-                
-                <div class='field'>
-                    <div class='field-label'>📧 Email Address:</div>
-                    <div class='field-value'>{$email}</div>
-                </div>
-                
-                <div class='field'>
-                    <div class='field-label'>📱 WhatsApp Number:</div>
-                    <div class='field-value'>{$whatsapp}</div>
-                </div>
-                
-                <div class='field'>
-                    <div class='field-label'>🌍 Country:</div>
-                    <div class='field-value'>{$country}</div>
-                </div>
-                
-                <div class='field'>
-                    <div class='field-label'>📋 Project Title:</div>
-                    <div class='field-value'>{$subject}</div>
-                </div>
-                
-                <div class='field'>
-                    <div class='field-label'>📝 Project Description:</div>
-                    <div class='field-value'>" . nl2br($description) . "</div>
-                </div>
-                
-                <div class='footer'>
-                    <p>This message was sent from the contact form at " . WEBSITE_URL . "</p>
-                    <p>Submitted on: " . date('F j, Y, g:i a') . "</p>
-                </div>
-            </div>
-        </div>
-    </body>
-    </html>
-    ";
-    
-    // Email headers
-    $headers = [
-        'MIME-Version: 1.0',
-        'Content-Type: text/html; charset=UTF-8',
-        'From: ' . SENDER_NAME . ' <' . SENDER_EMAIL . '>',
-        'Reply-To: ' . $name . ' <' . $email . '>',
-        'X-Mailer: PHP/' . phpversion()
-    ];
-    
-    // Try to send email using PHP mail() function
-    // Note: This requires your server to have mail() configured
-    $mailSent = mail(RECIPIENT_EMAIL, $emailSubject, $emailBody, implode("\r\n", $headers));
-    
-    if ($mailSent) {
-        return [
-            'success' => true,
-            'message' => 'Thank you! Your project request has been submitted successfully. We\'ll get back to you within 24 hours.'
-        ];
-    } else {
-        return [
-            'success' => false,
-            'message' => 'Sorry, there was an error sending your message. Please try again or contact us directly via email.'
-        ];
-    }
-}
+// Show PHP errors while testing (disable in production)
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-// Handle POST request
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if all required fields are present
-    $requiredFields = ['name', 'email', 'subject', 'description', 'country', 'whatsapp'];
-    $missingFields = [];
-    
-    foreach ($requiredFields as $field) {
-        if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
-            $missingFields[] = $field;
+/**
+ * Send raw SMTP over SSL to Gmail (port 465) using AUTH LOGIN
+ * Returns array ['success'=>bool, 'message'=>string, 'debug'=>string(optional)]
+ */
+function smtpSend($fromEmail, $fromName, $toEmail, $subject, $htmlBody) {
+    $host = GMAIL_SMTP_HOST; // 'ssl://smtp.gmail.com'
+    $port = GMAIL_SMTP_PORT; // 465
+    $username = GMAIL_SMTP_USERNAME;
+    $password = GMAIL_APP_PASSWORD;
+    $timeout = 30;
+
+    $debugOutput = '';
+
+    // Open SSL socket
+    $fp = stream_socket_client("{$host}:{$port}", $errno, $errstr, $timeout, STREAM_CLIENT_CONNECT);
+    if (!$fp) {
+        return ['success' => false, 'message' => "Could not connect to SMTP server: $errstr ($errno)"];
+    }
+
+    // helper to read response
+    $readResponse = function() use ($fp, &$debugOutput) {
+        $res = '';
+        while ($str = fgets($fp, 515)) {
+            $res .= $str;
+            // SMTP responses that start with code + space are final for that command (e.g. "250 OK")
+            if (isset($str[3]) && $str[3] === ' ') break;
+        }
+        $debugOutput .= $res;
+        return $res;
+    };
+
+    // helper to send command
+    $sendCmd = function($cmd) use ($fp, &$debugOutput) {
+        fwrite($fp, $cmd . "\r\n");
+        $debugOutput .= "C: $cmd\r\n";
+    };
+
+    // Read server greeting
+    $greeting = $readResponse();
+    if (substr($greeting, 0, 3) !== '220') {
+        fclose($fp);
+        return ['success' => false, 'message' => 'Unexpected SMTP greeting', 'debug' => $debugOutput];
+    }
+
+    // EHLO
+    $sendCmd("EHLO " . gethostname());
+    $ehlo = $readResponse();
+    if (substr($ehlo, 0, 3) !== '250') {
+        // some servers accept HELO
+        $sendCmd("HELO " . gethostname());
+        $helo = $readResponse();
+        if (substr($helo, 0, 3) !== '250') {
+            fclose($fp);
+            return ['success' => false, 'message' => 'EHLO/HELO not accepted', 'debug' => $debugOutput];
         }
     }
-    
-    if (!empty($missingFields)) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Please fill in all required fields: ' . implode(', ', $missingFields)
-        ]);
-        exit;
+
+    // AUTH LOGIN sequence (username & password base64)
+    $sendCmd("AUTH LOGIN");
+    $resp = $readResponse();
+    if (substr($resp, 0, 3) !== '334') {
+        fclose($fp);
+        return ['success' => false, 'message' => 'SMTP server refused AUTH LOGIN', 'debug' => $debugOutput];
     }
-    
-    // Send email
-    $result = sendEmail($_POST);
-    echo json_encode($result);
-    
+
+    $sendCmd(base64_encode($username));
+    $resp = $readResponse();
+    if (substr($resp, 0, 3) !== '334') {
+        fclose($fp);
+        return ['success' => false, 'message' => 'SMTP server did not ask for password', 'debug' => $debugOutput];
+    }
+
+    $sendCmd(base64_encode($password));
+    $resp = $readResponse();
+    if (substr($resp, 0, 3) !== '235') {
+        fclose($fp);
+        return ['success' => false, 'message' => 'Authentication failed (check username/app password)', 'debug' => $debugOutput];
+    }
+
+    // MAIL FROM
+    $sendCmd("MAIL FROM:<{$fromEmail}>");
+    $resp = $readResponse();
+    if (substr($resp, 0, 3) !== '250') {
+        fclose($fp);
+        return ['success' => false, 'message' => 'MAIL FROM rejected', 'debug' => $debugOutput];
+    }
+
+    // RCPT TO
+    $sendCmd("RCPT TO:<{$toEmail}>");
+    $resp = $readResponse();
+    if (substr($resp, 0, 3) !== '250' && substr($resp, 0, 3) !== '251') {
+        fclose($fp);
+        return ['success' => false, 'message' => 'RCPT TO rejected', 'debug' => $debugOutput];
+    }
+
+    // DATA
+    $sendCmd("DATA");
+    $resp = $readResponse();
+    if (substr($resp, 0, 3) !== '354') {
+        fclose($fp);
+        return ['success' => false, 'message' => 'DATA command not accepted', 'debug' => $debugOutput];
+    }
+
+    // Create headers
+    $boundary = md5(time());
+    $headers = [];
+    $headers[] = "From: {$fromName} <{$fromEmail}>";
+    $headers[] = "Reply-To: {$fromName} <{$fromEmail}>";
+    $headers[] = "MIME-Version: 1.0";
+    $headers[] = "Content-Type: text/html; charset=UTF-8";
+    $headers[] = "Content-Transfer-Encoding: 7bit";
+    $headers[] = "Subject: " . $subject;
+
+    // Full message
+    $message = implode("\r\n", $headers) . "\r\n\r\n" . $htmlBody . "\r\n.\r\n";
+
+    // send message data
+    fwrite($fp, $message);
+    $debugOutput .= "C: (message body)\r\n";
+    $resp = $readResponse();
+    if (substr($resp, 0, 3) !== '250') {
+        fclose($fp);
+        return ['success' => false, 'message' => 'Message not accepted by server', 'debug' => $debugOutput];
+    }
+
+    // QUIT
+    $sendCmd("QUIT");
+    $quitResp = $readResponse();
+
+    fclose($fp);
+    return ['success' => true, 'message' => 'Message sent via SMTP', 'debug' => $debugOutput];
+}
+
+// ---------- Handler logic ----------
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
+    exit;
+}
+
+// required fields
+$required = ['name','email','subject','description','country','whatsapp'];
+$missing = [];
+foreach ($required as $f) {
+    if (!isset($_POST[$f]) || trim($_POST[$f]) === '') $missing[] = $f;
+}
+if (!empty($missing)) {
+    echo json_encode(['success' => false, 'message' => 'Please fill in all required fields: ' . implode(', ', $missing)]);
+    exit;
+}
+
+// sanitize
+$name = htmlspecialchars(trim($_POST['name']));
+$email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+$subject = htmlspecialchars(trim($_POST['subject']));
+$description = htmlspecialchars(trim($_POST['description']));
+$country = htmlspecialchars(trim($_POST['country']));
+$whatsapp = htmlspecialchars(trim($_POST['whatsapp']));
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo json_encode(['success'=>false,'message'=>'Invalid email address provided.']);
+    exit;
+}
+
+// build HTML body
+$htmlBody = "<html><body>";
+$htmlBody .= "<h2>🎯 New Project Request from " . WEBSITE_URL . "</h2>";
+$htmlBody .= "<p><strong>Client Name:</strong> {$name}</p>";
+$htmlBody .= "<p><strong>Email:</strong> {$email}</p>";
+$htmlBody .= "<p><strong>WhatsApp:</strong> {$whatsapp}</p>";
+$htmlBody .= "<p><strong>Country:</strong> {$country}</p>";
+$htmlBody .= "<p><strong>Project Title:</strong> {$subject}</p>";
+$htmlBody .= "<p><strong>Description:</strong><br/>" . nl2br($description) . "</p>";
+$htmlBody .= "<hr/><p>Submitted on: " . date('F j, Y, g:i a') . "</p>";
+$htmlBody .= "</body></html>";
+
+// try SMTP send
+$result = smtpSend(SENDER_EMAIL, SENDER_NAME, RECIPIENT_EMAIL, "New Project Request: " . $subject, $htmlBody);
+
+if ($result['success']) {
+    echo json_encode(['success'=>true,'message'=>"Thank you! Your project request has been submitted successfully."]);
 } else {
-    // Not a POST request
-    echo json_encode([
-        'success' => false,
-        'message' => 'Invalid request method.'
-    ]);
+    // if DEBUG on, include debug info
+    $response = ['success'=>false,'message'=>'Sorry, there was an error sending your message.'];
+    if (defined('DEBUG') && DEBUG && isset($result['debug'])) $response['debug'] = $result['debug'];
+    if (isset($result['message'])) $response['smtp_msg'] = $result['message'];
+    echo json_encode($response);
 }
