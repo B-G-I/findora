@@ -29,10 +29,19 @@ document.addEventListener('DOMContentLoaded', function () {
         // Create FormData object
         const formData = new FormData(form);
 
-        // Submit form via AJAX
-        fetch('submit.php', {
+        // Convert FormData to JSON for serverless function
+        const jsonData = {};
+        formData.forEach((value, key) => {
+            jsonData[key] = value;
+        });
+
+        // Submit form via AJAX to Vercel serverless function
+        fetch('/api/submit', {
             method: 'POST',
-            body: formData
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonData)
         })
             .then(response => response.json())
             .then(data => {
