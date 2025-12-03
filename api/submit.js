@@ -1,7 +1,6 @@
-// Vercel Serverless Function for Contact Form Submission
-// This replaces the PHP backend with a Node.js serverless function
+const nodemailer = require('nodemailer');
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
     // Set CORS headers
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -58,9 +57,6 @@ export default async function handler(req, res) {
                 message: 'WhatsApp number must include country code (e.g., +1, +44, +213)'
             });
         }
-
-        // Import nodemailer dynamically
-        const nodemailer = require('nodemailer');
 
         // Create transporter using Gmail SMTP
         const transporter = nodemailer.createTransport({
@@ -155,7 +151,8 @@ export default async function handler(req, res) {
         console.error('Error sending email:', error);
         return res.status(500).json({
             success: false,
-            message: 'Sorry, there was an error sending your message. Please try again or contact us directly via email.'
+            message: 'Sorry, there was an error sending your message. Please try again or contact us directly via email.',
+            error: error.message
         });
     }
-}
+};

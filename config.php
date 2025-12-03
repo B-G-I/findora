@@ -26,3 +26,10 @@ define('SENDER_NAME', 'Find Aura Website');
 
 // Website URL (for reference in emails)
 define('WEBSITE_URL', 'https://findaura.org');
+
+/*
+curitiba.ns.porkbun.com
+fortaleza.ns.porkbun.com
+maceio.ns.porkbun.com
+salvador.ns.porkbun.com
+*/
