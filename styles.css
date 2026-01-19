@@ -112,6 +112,47 @@ body {
     font-size: 1.2rem;
 }
 
+/* WhatsApp Contact Section */
+.whatsapp-contact {
+    margin-top: var(--spacing-md);
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.whatsapp-label {
+    font-size: 0.95rem;
+    color: #6c757d;
+    margin-bottom: var(--spacing-xs);
+}
+
+.whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: var(--white);
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+}
+
+.whatsapp-icon {
+    width: 22px;
+    height: 22px;
+}
+
+.whatsapp-number {
+    letter-spacing: 0.5px;
+}
+
 /* Contact Section */
 .contact-section {
     margin-bottom: var(--spacing-xl);
