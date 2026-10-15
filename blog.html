@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hosting &amp; Tech Guides — Find Aura Blog | findaura.org</title>
+  <meta name="description" content="Independent hosting reviews, VPS benchmarks, deployment tutorials, and small business web guides. Tested by developers, written for everyone.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://findaura.org/blog">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/site.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Nav & Footer injected by nav-footer.js -->
+
+  <main>
+    <!-- ─── Blog Hero ─────────────────────────────────────────────── -->
+    <section class="blog-hero" aria-labelledby="blogHeroTitle">
+      <h1 id="blogHeroTitle">Hosting &amp; Tech Guides</h1>
+      <p>Real benchmarks. Honest reviews. Practical tutorials — for developers and small businesses.</p>
+      <div class="blog-search" role="search">
+        <input type="search" id="blogSearchInput" placeholder="Search reviews &amp; tutorials…" aria-label="Search articles">
+        <button id="blogSearchBtn" aria-label="Search">🔍</button>
+      </div>
+    </section>
+
+    <!-- ─── Top Hosting Picks Callout ────────────────────────────── -->
+    <div id="top-picks" style="max-width:1200px;margin:2rem auto 0;padding:0 1.5rem;">
+      <div class="ftc-banner" role="note">
+        <span class="ftc-banner__icon">🏆</span>
+        <div>
+          <strong>Top Hosting Picks for 2026:</strong> Based on our real testing, we currently recommend
+          <a href="/blog/hostinger-review-2026" style="color:#B565D8">Hostinger Business</a> for shared hosting value,
+          and Hostinger KVM VPS for budget VPS. All links may be affiliate links —
+          <a href="/disclosure" style="color:#B565D8">see our disclosure</a>.
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Category Filters ──────────────────────────────────────── -->
+    <div class="blog-filters" role="group" aria-label="Filter articles by category">
+      <button class="filter-pill active" data-cat="all"                   id="filterAll">All</button>
+      <button class="filter-pill"        data-cat="hosting-reviews"       id="filterHosting">Hosting Reviews</button>
+      <button class="filter-pill"        data-cat="vps-cloud"             id="filterVps">VPS &amp; Cloud</button>
+      <button class="filter-pill"        data-cat="deployment-tutorials"  id="filterTutorials">Deployment Tutorials</button>
+      <button class="filter-pill"        data-cat="small-business-domains" id="filterBusiness">Small Business &amp; Domains</button>
+    </div>
+
+    <!-- ─── Article Grid ─────────────────────────────────────────── -->
+    <div class="blog-grid" id="blogGrid" aria-live="polite" aria-label="Article list">
+      <!-- Populated by blog.js -->
+    </div>
+  </main>
+
+  <!-- Data files (order matters) -->
+  <script src="/data/batch1-hosting.js"></script>
+  <script src="/data/batch2-vps.js"></script>
+  <script src="/data/batch3-tutorials.js"></script>
+  <script src="/data/batch4-business.js"></script>
+  <script src="/data/articles.js"></script>
+  <script src="/nav-footer.js"></script>
+  <script src="/blog.js"></script>
+</body>
+</html>

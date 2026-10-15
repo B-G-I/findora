@@ -1,105 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find Aura - Contact Us</title>
-    <meta name="description" content="Contact Find Aura to bring your ideas to life. We build smart apps, modern web, and powerful software.">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Aura — Smart Apps, Modern Web & Hosting Guides | findaura.org</title>
+  <meta name="description" content="Find Aura builds smart apps, modern web, and powerful software. We also publish independent hosting reviews, VPS benchmarks, and deployment tutorials for developers and small businesses.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://findaura.org/">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Find Aura — Smart Apps, Modern Web & Hosting Guides">
+  <meta property="og:description" content="Independent hosting reviews, VPS benchmarks, and Laravel/Flutter development guides. We build great software and share what we learn.">
+  <meta property="og:url" content="https://findaura.org/">
+  <meta property="og:type" content="website">
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="site.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+  <!-- Nav & Footer injected by nav-footer.js -->
+
+  <main>
+    <!-- ─── Hero / Header Section ─────────────────────────────────── -->
     <div class="container">
-        <!-- Header Section -->
-        <header class="header">
-            <div class="logo-section">
-                <img src="assets/business-card-1.png" alt="Find Aura Logo" class="logo-image">
-            </div>
-            <div class="tagline">
-                <h1>Here Where Ideas Find Their <span class="highlight">AURA</span></h1>
-                <p class="subtitle">Great ideas deserve great execution. Contact us to turn your concepts & vision into digital reality.</p>
-                <div class="offer-badge">
-                    <span class="badge-icon">🎉</span>
-                    <span class="badge-text">Welcome offer: up to <strong>20% off</strong> your first project with us</span>
-                </div>
-                
-                <!-- WhatsApp Contact -->
-                <div class="whatsapp-contact">
-                    <p class="whatsapp-label">Or reach us directly on WhatsApp:</p>
-                    <a href="https://wa.me/213674291619" target="_blank" rel="noopener noreferrer" class="whatsapp-btn">
-                        <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                        </svg>
-                        <span class="whatsapp-number">+213 674 291 619</span>
-                    </a>
-                </div>
-            </div>
-        </header>
+      <header class="header" id="home">
+        <div class="logo-section">
+          <img src="assets/business-card-1.png" alt="Find Aura Logo" class="logo-image">
+        </div>
+        <div class="tagline">
+          <h1>Here Where Ideas Find Their <span class="highlight">AURA</span></h1>
+          <p class="subtitle">Great ideas deserve great execution. Contact us to turn your concepts &amp; vision into digital reality.</p>
+          <div class="offer-badge">
+            <span class="badge-icon">🎉</span>
+            <span class="badge-text">Welcome offer: up to <strong>20% off</strong> your first project with us</span>
+          </div>
 
-        <!-- Contact Form Section https://bionutrex.dz/submit.php -->
-        <section class="contact-section">
-            <div class="form-container">
-                <div class="form-header">
-                    <h2>Let's Build Something Amazing Together</h2>
-                    <p>Share your project idea with us and we'll get back to you within 24 hours</p>
-                </div>
-
-                <form id="contactForm" action="https://bionutrex.dz/submit.php" method="POST" class="contact-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="name">Your Name <span class="required">*</span></label>
-                            <input type="text" id="name" name="name" required placeholder="John Doe">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email Address <span class="required">*</span></label>
-                            <input type="email" id="email" name="email" required placeholder="john@example.com">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="subject">Project Title / Subject <span class="required">*</span></label>
-                        <input type="text" id="subject" name="subject" required placeholder="E.g., Mobile App Development, Website Redesign">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="description">Project Description & Details <span class="required">*</span></label>
-                        <textarea id="description" name="description" rows="6" required placeholder="Tell us about your project, your goals, and any specific requirements..."></textarea>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="country">Country <span class="required">*</span></label>
-                            <input type="text" id="country" name="country" required placeholder="United States">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="whatsapp">WhatsApp Number <span class="required">*</span></label>
-                            <input type="tel" id="whatsapp" name="whatsapp" required placeholder="+1 234 567 8900">
-                            <small class="field-hint">Include country code (e.g., +1, +44, +213)</small>
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="submit" class="submit-btn">
-                            <span class="btn-text">Submit Project Request</span>
-                            <span class="btn-icon">→</span>
-                        </button>
-                    </div>
-
-                    <div id="formMessage" class="form-message"></div>
-                </form>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>&copy; 2025 Find Aura. We Build Smart Apps & Modern Web & Powerful Software.</p>
-        </footer>
+          <!-- WhatsApp Contact -->
+          <div class="whatsapp-contact">
+            <p class="whatsapp-label">Or reach us directly on WhatsApp:</p>
+            <a href="https://wa.me/213674291619" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" id="whatsappBtn">
+              <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              <span class="whatsapp-number">+213 674 291 619</span>
+            </a>
+          </div>
+        </div>
+      </header>
     </div>
 
-    <script src="script.js"></script>
+    <!-- ─── Latest Hosting Reviews & Developer Guides ─────────────── -->
+    <section class="latest-guides" id="guides" aria-labelledby="guidesTitle">
+      <h2 class="section-title" id="guidesTitle">Latest Hosting Reviews &amp; Developer Guides</h2>
+      <p class="section-subtitle">Independent benchmarks, real test data, and tutorials — no fluff.</p>
+      <div class="guides-grid" id="homeBlogGrid">
+        <!-- Populated by home-blog.js -->
+        <div class="guide-card" style="animation-delay:0s">
+          <div class="guide-card__body">
+            <span class="guide-card__badge badge--hosting">Hosting Reviews</span>
+            <div class="guide-card__title">Hostinger Review 2026: Speed, LiteSpeed Benchmarks, hPanel &amp; Real Value Tested</div>
+            <div class="guide-card__excerpt">We spent 60 days benchmarking Hostinger's shared and VPS plans — LiteSpeed cache, hPanel UX, real load times from London &amp; New York. Here's the unfiltered verdict.</div>
+            <div class="guide-card__meta">📅 October 12, 2026 &nbsp;·&nbsp; ⏱ 9 min read</div>
+            <a href="/blog/hostinger-review-2026" class="guide-card__link">Read Full Review →</a>
+          </div>
+        </div>
+
+        <div class="guide-card" style="animation-delay:0.1s">
+          <div class="guide-card__body">
+            <span class="guide-card__badge badge--vps">VPS &amp; Cloud</span>
+            <div class="guide-card__title">VPS &amp; Cloud Hosting Guides Coming Soon</div>
+            <div class="guide-card__excerpt">Deep-dive benchmarks on Hostinger KVM, Namecheap VPS, DigitalOcean Droplets, and Hetzner Cloud — who wins for developers in 2026?</div>
+            <div class="guide-card__meta">📅 Coming October 2026 &nbsp;·&nbsp; ⏱ ~8 min read</div>
+            <a href="/blog" class="guide-card__link">Browse All Guides →</a>
+          </div>
+        </div>
+
+        <div class="guide-card" style="animation-delay:0.2s">
+          <div class="guide-card__body">
+            <span class="guide-card__badge badge--tutorial">Deployment Tutorials</span>
+            <div class="guide-card__title">Deployment Tutorial Series — Laravel, Flutter &amp; CI/CD</div>
+            <div class="guide-card__excerpt">Step-by-step guides to deploying Laravel APIs, Flutter web apps, and setting up GitHub Actions + Vercel CI/CD pipelines.</div>
+            <div class="guide-card__meta">📅 Coming October 2026 &nbsp;·&nbsp; ⏱ ~12 min read</div>
+            <a href="/blog" class="guide-card__link">Browse All Guides →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="guides-cta">
+        <a href="/blog" class="btn-primary" id="viewAllGuidesBtn">View All Guides &amp; Reviews →</a>
+      </div>
+    </section>
+
+    <!-- ─── Services / Contact Section ────────────────────────────── -->
+    <div class="container" id="contact">
+      <section class="contact-section" id="services">
+        <div class="form-container">
+          <div class="form-header">
+            <h2>Let's Build Something Amazing Together</h2>
+            <p>Share your project idea with us and we'll get back to you within 24 hours</p>
+          </div>
+
+          <form id="contactForm" action="https://bionutrex.dz/submit.php" method="POST" class="contact-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Your Name <span class="required">*</span></label>
+                <input type="text" id="name" name="name" required placeholder="John Doe">
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address <span class="required">*</span></label>
+                <input type="email" id="email" name="email" required placeholder="john@example.com">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Project Title / Subject <span class="required">*</span></label>
+              <input type="text" id="subject" name="subject" required placeholder="E.g., Mobile App Development, Website Redesign">
+            </div>
+
+            <div class="form-group">
+              <label for="description">Project Description &amp; Details <span class="required">*</span></label>
+              <textarea id="description" name="description" rows="6" required placeholder="Tell us about your project, your goals, and any specific requirements..."></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="country">Country <span class="required">*</span></label>
+                <input type="text" id="country" name="country" required placeholder="United States">
+              </div>
+              <div class="form-group">
+                <label for="whatsapp">WhatsApp Number <span class="required">*</span></label>
+                <input type="tel" id="whatsapp" name="whatsapp" required placeholder="+1 234 567 8900">
+                <small class="field-hint">Include country code (e.g., +1, +44, +213)</small>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="submit-btn" id="submitBtn">
+                <span class="btn-text">Submit Project Request</span>
+                <span class="btn-icon">→</span>
+              </button>
+            </div>
+
+            <div id="formMessage" class="form-message"></div>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="nav-footer.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
