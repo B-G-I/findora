@@ -9,9 +9,13 @@
 document.addEventListener('DOMContentLoaded', function () {
   const main = document.getElementById('articleMain');
 
-  // ── Extract slug from path: /blog/<slug> ─────────────────────────
+  // ── Extract slug from path: /blog/<slug> or ?slug=<slug> ─────────
+  const urlParams = new URLSearchParams(window.location.search);
+  const slugFromQuery = urlParams.get('slug');
   const pathParts = window.location.pathname.split('/').filter(Boolean);
-  const slug = pathParts[pathParts.length - 1] || '';
+  const lastPart = pathParts[pathParts.length - 1] || '';
+  const slugFromPath = (lastPart === 'article' || lastPart === 'article.html') ? '' : lastPart;
+  const slug = slugFromQuery || slugFromPath || '';
 
   const article = window.FA_getArticle ? window.FA_getArticle(slug) : null;
 
